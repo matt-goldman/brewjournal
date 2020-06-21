@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>brewjournal.Domain</RootNamespace>
+    <AssemblyName>brewjournal.Domain</AssemblyName>
+  </PropertyGroup>
+
+</Project>
