@@ -3,9 +3,7 @@ using brewjournal.Application.Recipes.Common;
 using brewjournal.Domain.Entities;
 using brewjournal.Domain.Enums;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,9 +42,14 @@ namespace brewjournal.Application.Recipes.Commands.AddRecipe
 
             await _context.Recipes.AddAsync(entity, cancellationToken);
 
-            request.Ingredients.ForEach(i =>
+            request.Ingredients.ForEach(async i =>
             {
-                
+                await _context.RecipeIngredients.AddAsync(new RecipeIngredients
+                {
+                    Recipe = entity,
+                    IngredientId = i.Ingredient.Id,
+                    Quantity = i.Quantity
+                }, cancellationToken);
             });
 
             await _context.SaveChangesAsync(cancellationToken);
