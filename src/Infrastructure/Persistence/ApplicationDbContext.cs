@@ -34,6 +34,14 @@ namespace brewjournal.Infrastructure.Persistence
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
+        public DbSet<Batch> Batches { get; set; }
+        public DbSet<BatchHopAdditions> BatchHopAdditions { get; set; }
+        public DbSet<BatchSample> BatchSamples { get; set; }
+        public DbSet<HopAddition> HopAdditions { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeIngredients> RecipeIngredients { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())

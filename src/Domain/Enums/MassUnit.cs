@@ -3,6 +3,7 @@
     public enum MassUnit
     {
         Kg,
-        g
+        g,
+        Oz
     }
 }

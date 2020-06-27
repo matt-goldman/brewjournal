@@ -3,6 +3,7 @@
     public enum LiquidVolumeUnit
     {
         Litres,
-        Gallons
+        Gallons,
+        Oz
     }
 }
