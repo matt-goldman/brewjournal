@@ -30,10 +30,6 @@ namespace brewjournal.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoList> TodoLists { get; set; }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-
         public DbSet<Batch> Batches { get; set; }
         public DbSet<BatchHopAdditions> BatchHopAdditions { get; set; }
         public DbSet<BatchSample> BatchSamples { get; set; }

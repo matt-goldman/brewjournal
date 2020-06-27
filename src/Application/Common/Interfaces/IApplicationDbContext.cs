@@ -7,9 +7,6 @@ namespace brewjournal.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<TodoList> TodoLists { get; set; }
-
-        DbSet<TodoItem> TodoItems { get; set; }
         DbSet<Batch> Batches { get; set; }
         DbSet<BatchHopAdditions> BatchHopAdditions { get; set; }
         DbSet<BatchSample> BatchSamples { get; set; }

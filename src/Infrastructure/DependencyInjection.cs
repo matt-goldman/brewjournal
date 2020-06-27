@@ -1,5 +1,4 @@
 ﻿using brewjournal.Application.Common.Interfaces;
-using brewjournal.Infrastructure.Files;
 using brewjournal.Infrastructure.Identity;
 using brewjournal.Infrastructure.Persistence;
 using brewjournal.Infrastructure.Services;
@@ -37,7 +36,6 @@ namespace brewjournal.Infrastructure
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
