@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using brewjournal.Application.Common.Mappings;
-using brewjournal.Application.TodoLists.Queries.GetTodos;
+using brewjournal.Application.Ingredients.Queries.Common;
 using brewjournal.Domain.Entities;
 using NUnit.Framework;
 using System;
@@ -29,8 +29,7 @@ namespace brewjournal.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(Ingredient), typeof(IngredientDto))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);

@@ -1,6 +1,6 @@
 ﻿using brewjournal.Application.Common.Behaviours;
 using brewjournal.Application.Common.Interfaces;
-using brewjournal.Application.TodoItems.Commands.CreateTodoItem;
+using brewjournal.Application.Ingredients.Commands.AddIngredient;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -11,14 +11,14 @@ namespace brewjournal.Application.UnitTests.Common.Behaviours
 {
     public class RequestLoggerTests
     {
-        private readonly Mock<ILogger<CreateTodoItemCommand>> _logger;
+        private readonly Mock<ILogger<AddIngredientCommand>> _logger;
         private readonly Mock<ICurrentUserService> _currentUserService;
         private readonly Mock<IIdentityService> _identityService;
 
 
         public RequestLoggerTests()
         {
-            _logger = new Mock<ILogger<CreateTodoItemCommand>>();
+            _logger = new Mock<ILogger<AddIngredientCommand>>();
 
             _currentUserService = new Mock<ICurrentUserService>();
 
@@ -30,9 +30,9 @@ namespace brewjournal.Application.UnitTests.Common.Behaviours
         {
             _currentUserService.Setup(x => x.UserId).Returns("Administrator");
 
-            var requestLogger = new RequestLogger<CreateTodoItemCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
+            var requestLogger = new RequestLogger<AddIngredientCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
 
-            await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+            await requestLogger.Process(new AddIngredientCommand { Name = "Grain" }, new CancellationToken());
 
             _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
         }
@@ -40,9 +40,9 @@ namespace brewjournal.Application.UnitTests.Common.Behaviours
         [Test]
         public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
         {
-            var requestLogger = new RequestLogger<CreateTodoItemCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
+            var requestLogger = new RequestLogger<AddIngredientCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
 
-            await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+            await requestLogger.Process(new AddIngredientCommand { Name = "Grain" }, new CancellationToken());
 
             _identityService.Verify(i => i.GetUserNameAsync(null), Times.Never);
         }
