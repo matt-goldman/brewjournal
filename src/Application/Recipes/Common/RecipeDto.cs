@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace brewjournal.Application.Recipes.Common
 {
-    public class RecipeVmDto
+    public class RecipeDto
     {
         public string Name { get; set; }
         public string Style { get; set; }

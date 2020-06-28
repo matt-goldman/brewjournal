@@ -9,7 +9,7 @@ namespace brewjournal.Application.Recipes.Commands.AddRecipe
 {
     public class AddRecipeCommand : IRequest<int>
     {
-        public RecipeVmDto viewModel { get; set; }  
+        public RecipeDto viewModel { get; set; }  
     }
 
     public class AddRecipeCommandHandler : IRequestHandler<AddRecipeCommand, int>

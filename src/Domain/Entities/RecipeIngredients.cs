@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace brewjournal.Domain.Entities
+﻿namespace brewjournal.Domain.Entities
 {
     public  class RecipeIngredients
     {
