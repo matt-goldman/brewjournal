@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Batch\Commands\AddBatch\" />
+    <Folder Include="Batch\Commands\AddBatchSample\" />
+    <Folder Include="Batch\Queries\GetBatch\" />
     <Folder Include="Common\Mappings\" />
   </ItemGroup>
 
