@@ -24,7 +24,9 @@ namespace brewjournal.Application.Ingredients.Commands.AddIngredient
 
         public async Task<int> Handle(AddIngredientCommand request, CancellationToken cancellationToken)
         {
-            var ingredient = await _context.Ingredients.Where(i => i.Name.ToLower() == request.Name.ToLower()).SingleOrDefaultAsync();
+            var ingredient = await _context.Ingredients
+                .Where(i => i.Name.ToLower() == request.Name.ToLower())
+                .SingleOrDefaultAsync();
 
             if(ingredient == null)
             {
