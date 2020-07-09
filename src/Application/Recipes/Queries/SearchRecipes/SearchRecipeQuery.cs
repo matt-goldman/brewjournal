@@ -33,9 +33,9 @@ namespace brewjournal.Application.Recipes.Queries.SearchRecipes
         {
             var entities = await _context.Recipes
                 .ConditionalWhere(() => !string.IsNullOrEmpty(request.Name),
-                    r => EF.Functions.Like(request.Name, $"%{r.Name}%"))
+                    r => EF.Functions.Like($"%{request.Name}%", r.Name))
                 .ConditionalWhere(() => !string.IsNullOrEmpty(request.Style),
-                    r => EF.Functions.Like(request.Style, $"%{r.Style}%"))
+                    r => EF.Functions.Like($"%{request.Style}%", r.Style))
                 .ProjectTo<RecipeDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
