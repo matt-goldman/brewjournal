@@ -1,10 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using brewjournal.Application.Batch.Common;
+using brewjournal.Application.Common.Interfaces;
+using brewjournal.Domain.Entities;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace brewjournal.Application.Batch.Commands.AddBatchSample
 {
-    class AddBatchSampleCommand
+    public class AddBatchSampleCommand : IRequest<int>
     {
+        public SampleDto Sample { get; set; }
+    }
+
+    public class AddBatchSampleCommandHandler : IRequestHandler<AddBatchSampleCommand, int>
+    {
+        private readonly IApplicationDbContext _context;
+
+        public AddBatchSampleCommandHandler(IApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<int> Handle(AddBatchSampleCommand request, CancellationToken cancellationToken)
+        {
+            var entity = new BatchSample
+            {
+                BatchId = request.Sample.BatchId,
+                Gravity = request.Sample.Gravity,
+                SampleDate = request.Sample.SampleDate,
+                Temperature = request.Sample.Temperature
+            };
+
+            await _context.BatchSamples.AddAsync(entity, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entity.Id;
+        }
     }
 }
