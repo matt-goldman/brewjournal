@@ -10,7 +10,7 @@ namespace brewjournal.WebUI.Controllers
     public class IngredientsController : ApiController
     {
         [HttpPost]
-        public async Task<ActionResult<int>> Create(AddIngredientCommand command)
+        public async Task<ActionResult<int>> Create([FromBody]AddIngredientCommand command)
         {
             return await Mediator.Send(command);
         }
