@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using brewjournal.Infrastructure.Persistence;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200712000624_AddIngredientCategories")]
-    partial class AddIngredientCategories
+    [Migration("20200712070517_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -608,7 +608,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("brewjournal.Domain.Entities.RecipeIngredients", b =>
                 {
                     b.HasOne("brewjournal.Domain.Entities.Ingredient", "Ingredient")
-                        .WithMany()
+                        .WithMany("Recipes")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

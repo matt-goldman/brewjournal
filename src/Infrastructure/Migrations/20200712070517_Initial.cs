@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {
@@ -64,16 +64,16 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IngredientCategory",
+                name: "IngredientCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IngredientCategory", x => x.Id);
+                    table.PrimaryKey("PK_IngredientCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,9 +230,9 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingredients_IngredientCategory_CategoryId",
+                        name: "FK_Ingredients_IngredientCategories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "IngredientCategory",
+                        principalTable: "IngredientCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -512,7 +512,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "IngredientCategory");
+                name: "IngredientCategories");
         }
     }
 }

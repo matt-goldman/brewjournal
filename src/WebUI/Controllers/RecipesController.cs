@@ -21,8 +21,8 @@ namespace brewjournal.WebUI.Controllers
             return await Mediator.Send(new GetRecipeQuery { Id = id });
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<RecipeSearchResultsVm>> Search([FromBody]SearchRecipeQuery query)
+        [HttpPost("[action]")]
+        public async Task<ActionResult<RecipeSearchResultsVm>> Search(SearchRecipeQuery query)
         {
             return await Mediator.Send(query);
         }

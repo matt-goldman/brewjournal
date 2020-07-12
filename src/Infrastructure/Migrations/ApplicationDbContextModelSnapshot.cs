@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using brewjournal.Infrastructure.Persistence;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -606,7 +606,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("brewjournal.Domain.Entities.RecipeIngredients", b =>
                 {
                     b.HasOne("brewjournal.Domain.Entities.Ingredient", "Ingredient")
-                        .WithMany()
+                        .WithMany("Recipes")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
