@@ -1,6 +1,7 @@
 ﻿using brewjournal.Application.Common.Behaviours;
 using brewjournal.Application.Common.Interfaces;
 using brewjournal.Application.Ingredients.Commands.AddIngredient;
+using brewjournal.Application.Ingredients.Queries.Common;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace brewjournal.Application.UnitTests.Common.Behaviours
 
             var requestLogger = new RequestLogger<AddIngredientCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
 
-            await requestLogger.Process(new AddIngredientCommand { Name = "Grain" }, new CancellationToken());
+            await requestLogger.Process(new AddIngredientCommand { Ingredient = new IngredientDto { Name = "Grain" } }, new CancellationToken());
 
             _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
         }
@@ -42,7 +43,7 @@ namespace brewjournal.Application.UnitTests.Common.Behaviours
         {
             var requestLogger = new RequestLogger<AddIngredientCommand>(_logger.Object, _currentUserService.Object, _identityService.Object);
 
-            await requestLogger.Process(new AddIngredientCommand { Name = "Grain" }, new CancellationToken());
+            await requestLogger.Process(new AddIngredientCommand { Ingredient = new IngredientDto { Name = "Grain" }  }, new CancellationToken());
 
             _identityService.Verify(i => i.GetUserNameAsync(null), Times.Never);
         }

@@ -39,7 +39,7 @@ namespace brewjournal.Application.Recipes.Commands.AddRecipe
                 await _context.RecipeIngredients.AddAsync(new RecipeIngredients
                 {
                     Recipe = entity,
-                    IngredientId = i.Ingredient.Id,
+                    IngredientId = i.Ingredient.Id.Value,
                     Quantity = i.Quantity
                 }, cancellationToken);
             });

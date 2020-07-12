@@ -8,7 +8,7 @@ namespace brewjournal.Application.Batch.Common
     {
         public int BatchId { get; set; }
         public DateTime SampleDate { get; set; }
-        public long Gravity { get; set; }
-        public long Temperature { get; set; }
+        public long? Gravity { get; set; }
+        public long? Temperature { get; set; }
     }
 }

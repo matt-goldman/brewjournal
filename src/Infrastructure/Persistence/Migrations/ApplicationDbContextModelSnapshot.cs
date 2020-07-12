@@ -375,12 +375,12 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientCategory");
+                    b.ToTable("IngredientCategories");
                 });
 
             modelBuilder.Entity("brewjournal.Domain.Entities.Recipe", b =>
@@ -572,7 +572,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("brewjournal.Domain.Entities.HopAddition", "HopAddition")
-                        .WithMany()
+                        .WithMany("Batches")
                         .HasForeignKey("HopAdditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

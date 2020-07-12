@@ -12,13 +12,13 @@ namespace brewjournal.WebUI.Controllers
     public class BatchesController : ApiController
     {
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody]AddBatchCommand command)
+        public async Task<ActionResult<int>> Create(BatchDto batch)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new AddBatchCommand { Batch = batch } );
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<int>> Sample ([FromBody]AddBatchSampleCommand command)
+        public async Task<ActionResult<int>> Sample (AddBatchSampleCommand command)
         {
             return await Mediator.Send(command);
         }

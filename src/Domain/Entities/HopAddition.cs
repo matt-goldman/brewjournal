@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace brewjournal.Domain.Entities
 {
@@ -10,5 +11,6 @@ namespace brewjournal.Domain.Entities
         public int? Minutes { get; set; }
         public DateTime? DateAdded { get; set; }
         public int? Temperature { get; set; }
+        public ICollection<BatchHopAdditions> Batches { get; set; }
     }
 }

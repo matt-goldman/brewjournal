@@ -13,7 +13,7 @@ namespace brewjournal.Domain.Entities
         public long PitchTemp { get; set; }
         public long OG { get; set; }
         public long? FG { get; set; }
-        public List<BatchHopAdditions> HopAdditions { get; set; }
+        public ICollection<BatchHopAdditions> HopAdditions { get; set; }
         public string Notes { get; set; }
         public DateTime? ServingDate { get; set; }
         public List<BatchSample> Samples { get; set; }

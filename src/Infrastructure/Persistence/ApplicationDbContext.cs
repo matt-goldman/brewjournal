@@ -38,6 +38,8 @@ namespace brewjournal.Infrastructure.Persistence
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeIngredients> RecipeIngredients { get; set; }
 
+        public DbSet<IngredientCategory> IngredientCategories { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
