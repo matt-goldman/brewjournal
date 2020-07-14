@@ -1,9 +1,11 @@
-﻿using brewjournal.Domain.Enums;
+﻿using brewjournal.Application.Common.Mappings;
+using brewjournal.Domain.Entities;
+using brewjournal.Domain.Enums;
 using System.Collections.Generic;
 
 namespace brewjournal.Application.Recipes.Common
 {
-    public class RecipeDto
+    public class RecipeDto : IMapFrom<Recipe>
     {
         public string Name { get; set; }
         public string Style { get; set; }

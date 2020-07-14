@@ -2,6 +2,8 @@
 using brewjournal.Application.Recipes.Common;
 using brewjournal.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,20 +31,24 @@ namespace brewjournal.Application.Recipes.Commands.AddRecipe
                 Style = request.viewModel.Style,
                 MassUnits = request.viewModel.MassUnits,
                 TemperatureUnit = request.viewModel.TemperatureUnits,
-                LiquidUnits = request.viewModel.LiquidUnits
+                LiquidUnits = request.viewModel.LiquidUnits,
+                Notes = request.viewModel.Notes
             };
 
             await _context.Recipes.AddAsync(entity, cancellationToken);
 
-            request.viewModel.Ingredients.ForEach(async i =>
+            if(request.viewModel.Ingredients != null && request.viewModel.Ingredients.Count > 0)
             {
-                await _context.RecipeIngredients.AddAsync(new RecipeIngredients
+                request.viewModel.Ingredients.ForEach(async i =>
                 {
-                    Recipe = entity,
-                    IngredientId = i.Ingredient.Id,
-                    Quantity = i.Quantity
-                }, cancellationToken);
-            });
+                    await _context.RecipeIngredients.AddAsync(new RecipeIngredients
+                    {
+                        Recipe = entity,
+                        IngredientId = i.IngredientId,
+                        Quantity = i.Quantity
+                    }, cancellationToken);
+                });
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 

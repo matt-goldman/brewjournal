@@ -12,15 +12,15 @@ namespace brewjournal.WebUI.Controllers
     public class BatchesController : ApiController
     {
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody]AddBatchCommand command)
+        public async Task<ActionResult<int>> Create([FromBody]BatchDto batch)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new AddBatchCommand { Batch = batch } );
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<int>> Sample ([FromBody]AddBatchSampleCommand command)
+        public async Task<ActionResult<int>> Sample (SampleDto sample)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new AddBatchSampleCommand { Sample = sample });
         }
 
         [HttpGet]
@@ -35,8 +35,8 @@ namespace brewjournal.WebUI.Controllers
             return await Mediator.Send(new GetBatchQuery { Id = id });
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<BatchListVm>> Search([FromBody]SearchBatchQuery query)
+        [HttpPost("[action]")]
+        public async Task<ActionResult<BatchListVm>> Search(SearchBatchQuery query)
         {
             return await Mediator.Send(query);
         }

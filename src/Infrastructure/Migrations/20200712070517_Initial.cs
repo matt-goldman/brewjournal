@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,6 +64,19 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IngredientCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IngredientCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -81,21 +94,21 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TodoLists",
+                name: "Recipes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(maxLength: 200, nullable: false),
-                    Colour = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Style = table.Column<string>(nullable: true),
+                    LiquidUnits = table.Column<int>(nullable: false),
+                    MassUnits = table.Column<int>(nullable: false),
+                    TemperatureUnit = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoLists", x => x.Id);
+                    table.PrimaryKey("PK_Recipes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,29 +218,144 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TodoItems",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
-                    ListId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 200, nullable: false),
-                    Note = table.Column<string>(nullable: true),
-                    Done = table.Column<bool>(nullable: false),
-                    Reminder = table.Column<DateTime>(nullable: true),
-                    Priority = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoItems", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TodoItems_TodoLists_ListId",
-                        column: x => x.ListId,
-                        principalTable: "TodoLists",
+                        name: "FK_Ingredients_IngredientCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "IngredientCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Batches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecipeId = table.Column<int>(nullable: false),
+                    BrewDay = table.Column<DateTime>(nullable: false),
+                    BottleOrKegDate = table.Column<DateTime>(nullable: true),
+                    PitchTemp = table.Column<long>(nullable: false),
+                    OG = table.Column<long>(nullable: false),
+                    FG = table.Column<long>(nullable: true),
+                    Notes = table.Column<string>(nullable: true),
+                    ServingDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Batches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Batches_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HopAdditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IngredientId = table.Column<int>(nullable: true),
+                    Minutes = table.Column<int>(nullable: true),
+                    DateAdded = table.Column<DateTime>(nullable: true),
+                    Temperature = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HopAdditions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HopAdditions_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecipeIngredients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecipeId = table.Column<int>(nullable: false),
+                    IngredientId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeIngredients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BatchSamples",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BatchId = table.Column<int>(nullable: false),
+                    SampleDate = table.Column<DateTime>(nullable: false),
+                    Gravity = table.Column<long>(nullable: false),
+                    Temperature = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BatchSamples", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BatchSamples_Batches_BatchId",
+                        column: x => x.BatchId,
+                        principalTable: "Batches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BatchHopAdditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BatchId = table.Column<int>(nullable: false),
+                    HopAdditionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BatchHopAdditions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BatchHopAdditions_Batches_BatchId",
+                        column: x => x.BatchId,
+                        principalTable: "Batches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BatchHopAdditions_HopAdditions_HopAdditionId",
+                        column: x => x.HopAdditionId,
+                        principalTable: "HopAdditions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -272,6 +400,26 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Batches_RecipeId",
+                table: "Batches",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BatchHopAdditions_BatchId",
+                table: "BatchHopAdditions",
+                column: "BatchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BatchHopAdditions_HopAdditionId",
+                table: "BatchHopAdditions",
+                column: "HopAdditionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BatchSamples_BatchId",
+                table: "BatchSamples",
+                column: "BatchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -281,6 +429,16 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HopAdditions_IngredientId",
+                table: "HopAdditions",
+                column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingredients_CategoryId",
+                table: "Ingredients",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
@@ -293,9 +451,14 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 columns: new[] { "SubjectId", "ClientId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TodoItems_ListId",
-                table: "TodoItems",
-                column: "ListId");
+                name: "IX_RecipeIngredients_IngredientId",
+                table: "RecipeIngredients",
+                column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredients_RecipeId",
+                table: "RecipeIngredients",
+                column: "RecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -316,13 +479,19 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BatchHopAdditions");
+
+            migrationBuilder.DropTable(
+                name: "BatchSamples");
+
+            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "TodoItems");
+                name: "RecipeIngredients");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -331,7 +500,19 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "TodoLists");
+                name: "HopAdditions");
+
+            migrationBuilder.DropTable(
+                name: "Batches");
+
+            migrationBuilder.DropTable(
+                name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "Recipes");
+
+            migrationBuilder.DropTable(
+                name: "IngredientCategories");
         }
     }
 }

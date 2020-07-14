@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using brewjournal.Infrastructure.Persistence;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -249,14 +249,14 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("BrewDay")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("FG")
-                        .HasColumnType("bigint");
+                    b.Property<float?>("FG")
+                        .HasColumnType("real");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("OG")
-                        .HasColumnType("bigint");
+                    b.Property<float>("OG")
+                        .HasColumnType("real");
 
                     b.Property<long>("PitchTemp")
                         .HasColumnType("bigint");
@@ -306,8 +306,8 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                     b.Property<int>("BatchId")
                         .HasColumnType("int");
 
-                    b.Property<long>("Gravity")
-                        .HasColumnType("bigint");
+                    b.Property<float>("Gravity")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("SampleDate")
                         .HasColumnType("datetime2");
@@ -375,12 +375,12 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientCategory");
+                    b.ToTable("IngredientCategories");
                 });
 
             modelBuilder.Entity("brewjournal.Domain.Entities.Recipe", b =>
@@ -572,7 +572,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("brewjournal.Domain.Entities.HopAddition", "HopAddition")
-                        .WithMany()
+                        .WithMany("Batches")
                         .HasForeignKey("HopAdditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -606,7 +606,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("brewjournal.Domain.Entities.RecipeIngredients", b =>
                 {
                     b.HasOne("brewjournal.Domain.Entities.Ingredient", "Ingredient")
-                        .WithMany()
+                        .WithMany("Recipes")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

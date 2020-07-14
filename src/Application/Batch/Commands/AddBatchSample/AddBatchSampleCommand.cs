@@ -26,9 +26,9 @@ namespace brewjournal.Application.Batch.Commands.AddBatchSample
             var entity = new BatchSample
             {
                 BatchId = request.Sample.BatchId,
-                Gravity = request.Sample.Gravity,
+                Gravity = request.Sample.Gravity.Value,
                 SampleDate = request.Sample.SampleDate,
-                Temperature = request.Sample.Temperature
+                Temperature = request.Sample.Temperature.Value
             };
 
             await _context.BatchSamples.AddAsync(entity, cancellationToken);

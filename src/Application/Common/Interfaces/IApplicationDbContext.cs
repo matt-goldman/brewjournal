@@ -14,6 +14,7 @@ namespace brewjournal.Application.Common.Interfaces
         DbSet<Ingredient> Ingredients { get; set; }
         DbSet<Recipe> Recipes { get; set; }
         DbSet<RecipeIngredients> RecipeIngredients { get; set; }
+        DbSet<IngredientCategory> IngredientCategories { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -11,7 +11,7 @@ namespace brewjournal.Domain.Entities
         public LiquidVolumeUnit LiquidUnits { get; set; }
         public MassUnit MassUnits { get; set; }
         public TemperatureUnit TemperatureUnit { get; set; }
-        public List<RecipeIngredients> Ingredients { get; set; }
+        public ICollection<RecipeIngredients> Ingredients { get; set; }
         public string Notes { get; set; }
     }
 }

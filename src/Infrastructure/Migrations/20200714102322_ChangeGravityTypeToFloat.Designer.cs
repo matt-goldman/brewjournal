@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using brewjournal.Infrastructure.Persistence;
 
-namespace brewjournal.Infrastructure.Persistence.Migrations
+namespace brewjournal.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200627061611_remove-todo-entities")]
-    partial class removetodoentities
+    [Migration("20200714102322_ChangeGravityTypeToFloat")]
+    partial class ChangeGravityTypeToFloat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -251,14 +251,14 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("BrewDay")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("FG")
-                        .HasColumnType("bigint");
+                    b.Property<float?>("FG")
+                        .HasColumnType("real");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("OG")
-                        .HasColumnType("bigint");
+                    b.Property<float>("OG")
+                        .HasColumnType("real");
 
                     b.Property<long>("PitchTemp")
                         .HasColumnType("bigint");
@@ -308,8 +308,8 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                     b.Property<int>("BatchId")
                         .HasColumnType("int");
 
-                    b.Property<long>("Gravity")
-                        .HasColumnType("bigint");
+                    b.Property<float>("Gravity")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("SampleDate")
                         .HasColumnType("datetime2");
@@ -345,10 +345,32 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IngredientId");
+
                     b.ToTable("HopAdditions");
                 });
 
             modelBuilder.Entity("brewjournal.Domain.Entities.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("brewjournal.Domain.Entities.IngredientCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -360,7 +382,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("IngredientCategories");
                 });
 
             modelBuilder.Entity("brewjournal.Domain.Entities.Recipe", b =>
@@ -552,7 +574,7 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("brewjournal.Domain.Entities.HopAddition", "HopAddition")
-                        .WithMany()
+                        .WithMany("Batches")
                         .HasForeignKey("HopAdditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -567,10 +589,26 @@ namespace brewjournal.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("brewjournal.Domain.Entities.RecipeIngredients", b =>
+            modelBuilder.Entity("brewjournal.Domain.Entities.HopAddition", b =>
                 {
                     b.HasOne("brewjournal.Domain.Entities.Ingredient", "Ingredient")
                         .WithMany()
+                        .HasForeignKey("IngredientId");
+                });
+
+            modelBuilder.Entity("brewjournal.Domain.Entities.Ingredient", b =>
+                {
+                    b.HasOne("brewjournal.Domain.Entities.IngredientCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("brewjournal.Domain.Entities.RecipeIngredients", b =>
+                {
+                    b.HasOne("brewjournal.Domain.Entities.Ingredient", "Ingredient")
+                        .WithMany("Recipes")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
