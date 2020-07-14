@@ -363,12 +363,12 @@
             "format": "int64"
           },
           "og": {
-            "type": "integer",
-            "format": "int64"
+            "type": "number",
+            "format": "float"
           },
           "fg": {
-            "type": "integer",
-            "format": "int64",
+            "type": "number",
+            "format": "float",
             "nullable": true
           },
           "hopAdditions": {
@@ -438,8 +438,8 @@
             "format": "date-time"
           },
           "gravity": {
-            "type": "integer",
-            "format": "int64",
+            "type": "number",
+            "format": "float",
             "nullable": true
           },
           "temperature": {

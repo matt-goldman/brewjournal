@@ -13,8 +13,8 @@ namespace brewjournal.Application.Batch.Common
         public DateTime BrewDay { get; set; }
         public DateTime? BottleOrKegDate { get; set; }
         public long PitchTemp { get; set; }
-        public long OG { get; set; }
-        public long? FG { get; set; }
+        public float OG { get; set; }
+        public float? FG { get; set; }
         public List<HopAdditionDto> HopAdditions { get; set; }
         public string Notes { get; set; }
         public DateTime? ServingDate { get; set; }

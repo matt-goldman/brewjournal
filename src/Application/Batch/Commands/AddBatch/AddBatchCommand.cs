@@ -56,8 +56,8 @@ namespace brewjournal.Application.Batch.Commands.AddBatch
 
                 var additionEntity = new BatchHopAdditions
                 {
-                    HopAdditionId = hopEntity.Id,
-                    BatchId = entity.Id
+                    HopAddition = hopEntity,
+                    Batch = entity
                 };
 
                 await _context.BatchHopAdditions.AddAsync(additionEntity, cancellationToken);

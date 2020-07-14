@@ -1187,10 +1187,10 @@ namespace BrewjournalApp
         public long PitchTemp { get; set; }
     
         [Newtonsoft.Json.JsonProperty("og", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public long Og { get; set; }
+        public float Og { get; set; }
     
         [Newtonsoft.Json.JsonProperty("fg", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public long? Fg { get; set; }
+        public float? Fg { get; set; }
     
         [Newtonsoft.Json.JsonProperty("hopAdditions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<HopAdditionDto> HopAdditions { get; set; }
@@ -1238,7 +1238,7 @@ namespace BrewjournalApp
         public System.DateTimeOffset SampleDate { get; set; }
     
         [Newtonsoft.Json.JsonProperty("gravity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public long? Gravity { get; set; }
+        public float? Gravity { get; set; }
     
         [Newtonsoft.Json.JsonProperty("temperature", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public long? Temperature { get; set; }
