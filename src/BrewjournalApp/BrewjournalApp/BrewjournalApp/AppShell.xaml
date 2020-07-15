@@ -35,7 +35,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:BatchesPage}" />
         </Tab>
         <Tab Title="Recipes" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:RecipesPage}" />
         </Tab>
     </TabBar>
 
