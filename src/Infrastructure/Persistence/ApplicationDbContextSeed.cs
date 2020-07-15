@@ -1,6 +1,7 @@
 ﻿using brewjournal.Domain.Entities;
 using brewjournal.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,27 +39,36 @@ namespace brewjournal.Infrastructure.Persistence
 
         public static void AddCategories (ApplicationDbContext context)
         {
-            context.IngredientCategories.Add(new IngredientCategory
+            try
             {
-                Name = "Hops"
-            });
+                context.IngredientCategories.Add(new IngredientCategory
+                {
+                    Name = "Hops"
+                });
 
-            context.IngredientCategories.Add(new IngredientCategory
+                context.IngredientCategories.Add(new IngredientCategory
+                {
+                    Name = "Grain"
+                });
+
+                context.IngredientCategories.Add(new IngredientCategory
+                {
+                    Name = "Yeast"
+                });
+
+                context.IngredientCategories.Add(new IngredientCategory
+                {
+                    Name = "Extract"
+                });
+
+                context.SaveChanges();
+            }
+            catch (System.Exception ex)
             {
-                Name = "Grain"
-            });
-
-            context.IngredientCategories.Add(new IngredientCategory
-            {
-                Name = "Yeast"
-            });
-
-            context.IngredientCategories.Add(new IngredientCategory
-            {
-                Name = "Extract"
-            });
-
-            context.SaveChanges();
+                Debug.WriteLine("Failed to seed database");
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         public static void AddIngredients(ApplicationDbContext context)
