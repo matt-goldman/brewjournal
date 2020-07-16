@@ -7,11 +7,6 @@
              x:Class="BrewjournalApp.Views.BatchesPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="My Batches"
-                   FontAttributes="Bold"
-                   FontSize="Title"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
             <CollectionView ItemsSource="{Binding Batches}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

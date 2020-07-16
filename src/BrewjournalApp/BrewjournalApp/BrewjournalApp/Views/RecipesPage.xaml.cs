@@ -13,6 +13,7 @@ namespace BrewjournalApp.Views
         {
             InitializeComponent();
             viewModel = new RecipesViewModel();
+            viewModel.Navigation = Navigation;
             BindingContext = viewModel;
         }
     }

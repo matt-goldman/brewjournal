@@ -13,6 +13,7 @@ namespace BrewjournalApp.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public INavigation Navigation { get; set; }
 
         bool isBusy = false;
         public bool IsBusy

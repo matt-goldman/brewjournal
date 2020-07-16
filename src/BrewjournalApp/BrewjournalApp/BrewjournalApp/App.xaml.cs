@@ -9,12 +9,13 @@ namespace BrewjournalApp
     public partial class App : Application
     {
         public static Constants Constants { get; set; }
+
         public App()
         {
             InitializeComponent();
             Constants = new Constants();
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()

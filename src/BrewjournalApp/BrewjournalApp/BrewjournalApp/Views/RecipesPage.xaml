@@ -4,15 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="BrewjournalApp.Views.RecipesPage"
-             Visual="Material">
+             x:Class="BrewjournalApp.Views.RecipesPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="My Recipes"
-                   FontAttributes="Bold"
-                   FontSize="Title"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
             <StackLayout Orientation="Horizontal"
                          Padding="5">
                 <Entry Placeholder="Enter recipe search term..."

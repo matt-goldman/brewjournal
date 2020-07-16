@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C0E4054-F6D8-4919-87F4-9CED3DF44AAF}</ProjectGuid>
+    <ProjectGuid>{892C004E-C9DB-486F-86CE-7BF4F76E8C43}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6968b3a4-1835-46a3-ac5c-1ae33b475983}</TemplateGuid>
     <OutputType>Library</OutputType>
@@ -85,12 +85,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
-    <AndroidResource Include="Resources\drawable\tab_about.png" />
-    <AndroidResource Include="Resources\drawable\tab_feed.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewjournalApp\BrewjournalApp.csproj">
-      <Project>{4499AB73-06FA-4129-B457-DCE1D0B91410}</Project>
+      <Project>{78DA0E92-C9DC-41D2-A513-7C765798AFF2}</Project>
       <Name>BrewjournalApp</Name>
     </ProjectReference>
   </ItemGroup>

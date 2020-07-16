@@ -6,23 +6,15 @@ using Xamarin.Forms.Xaml;
 
 namespace BrewjournalApp.Views
 {
-    //[QueryProperty(nameof(RecipeId), "id")]
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class RecipeDetailsPage : ContentPage
     {
         public RecipeDetailsViewModel viewModel { get; set; }
 
-        //public string RecipeId
-        //{
-        //    set => recipeId = int.Parse(Uri.UnescapeDataString(value));
-        //}
-
-        //private int recipeId;
-
-        public RecipeDetailsPage()
+        public RecipeDetailsPage(int RecipeId)
         {
             InitializeComponent();
-            viewModel = new RecipeDetailsViewModel(1);
+            viewModel = new RecipeDetailsViewModel(RecipeId);
             BindingContext = viewModel;
         }
     }

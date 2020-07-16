@@ -1,4 +1,5 @@
 ﻿using BrewjournalApp.Services;
+using BrewjournalApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,12 +39,11 @@ namespace BrewjournalApp.ViewModels
 
         public async Task ShowRecipeDetails()
         {
-            if(SelectedRecipe != null && SelectedRecipe.Id > 0)
+            if (SelectedRecipe != null && SelectedRecipe.Id > 0)
             {
                 try
                 {
-                    //await Shell.Current.GoToAsync($"recipedetails?id={SelectedRecipe.Id}");
-                    await Shell.Current.GoToAsync("recipedetails");
+                    await Navigation.PushAsync(new RecipeDetailsPage(SelectedRecipe.Id));
                 }
                 catch (Exception ex)
                 {

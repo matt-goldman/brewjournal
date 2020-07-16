@@ -4,17 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title="Recipe Details"
              x:Class="BrewjournalApp.Views.RecipeDetailsPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout VerticalOptions="StartAndExpand"
+                     Padding="20">
             <Label Text="{Binding Name}"
                    FontAttributes="Bold"
                    FontSize="Title"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Style: "/>
+            <StackLayout>
+                <Label Text="Style:"
+                       FontAttributes="Bold"/>
                 <Label Text="{Binding Style}"/>
             </StackLayout>
             <StackLayout>
@@ -22,6 +23,8 @@
                        Text="Notes:"/>
                 <Label Text="{Binding Notes}"/>
             </StackLayout>
+            <Label Text="Ingredients:"
+                   FontAttributes="Bold"/>
             <CollectionView ItemsSource="{Binding Ingredients}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -29,8 +32,11 @@
                             <Grid ColumnDefinitions="3*, 2*">
                                 <Label Text="{Binding IngredientName}"
                                            Grid.Column="0"/>
-                                <Label Text="{Binding Quantity}"
-                                           Grid.Column="1"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Grid.Column="1">
+                                    <Label Text="{Binding Quantity}"/>
+                                    <Label Text="{Binding MassUnit}"/>
+                                </StackLayout>
                             </Grid>
                         </Frame>
                     </DataTemplate>
