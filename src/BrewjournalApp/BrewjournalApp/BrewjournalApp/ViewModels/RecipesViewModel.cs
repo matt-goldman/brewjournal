@@ -2,29 +2,32 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace BrewjournalApp.ViewModels
 {
-    public class RecipesViewModel
+    public class RecipesViewModel : BaseViewModel
     {
         private readonly RecipesService client;
         public string SearchTerm { get; set; }
 
-        private CancellationTokenSource _throttleCts = new CancellationTokenSource();
+        public RecipeDto SelectedRecipe { get; set; } = new RecipeDto();
+
+        public string SelectedRecipeName => SelectedRecipe != null ? SelectedRecipe.Name : "";
 
         public ICollection<RecipeDto> Recipes { get; set; } = new ObservableCollection<RecipeDto>();
 
         public ICommand SearchRecipeCommand { get; set; }
+        public ICommand OpenRecipeDetailsCommand { get; set; }
 
         public RecipesViewModel()
         {
             client = new RecipesService();
-            SearchRecipeCommand = new Command(async () => await SearchRecipes());//DebouncedSearch().ConfigureAwait(false));
+            SearchRecipeCommand = new Command(async () => await SearchRecipes());
+            OpenRecipeDetailsCommand = new Command(async () => await ShowRecipeDetails());
         }
 
         public async Task SearchRecipes()
@@ -33,15 +36,21 @@ namespace BrewjournalApp.ViewModels
             Recipes = await client.SearchAsync(SearchTerm);
         }
 
-        private async Task DebouncedSearch()
+        public async Task ShowRecipeDetails()
         {
-            Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
-
-            await Task.Delay(TimeSpan.FromMilliseconds(500), _throttleCts.Token)
-                .ContinueWith(async task => await SearchRecipes(),
-                CancellationToken.None,
-                TaskContinuationOptions.OnlyOnRanToCompletion,
-                TaskScheduler.FromCurrentSynchronizationContext());
+            if(SelectedRecipe != null && SelectedRecipe.Id > 0)
+            {
+                try
+                {
+                    //await Shell.Current.GoToAsync($"recipedetails?id={SelectedRecipe.Id}");
+                    await Shell.Current.GoToAsync("recipedetails");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.StackTrace);
+                }
+            }
         }
     }
 }

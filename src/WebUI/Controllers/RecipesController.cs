@@ -3,6 +3,7 @@ using brewjournal.Application.Recipes.Common;
 using brewjournal.Application.Recipes.Queries.GetRecipe;
 using brewjournal.Application.Recipes.Queries.SearchRecipes;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace brewjournal.WebUI.Controllers
@@ -24,7 +25,10 @@ namespace brewjournal.WebUI.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<RecipeSearchResultsVm>> Search(SearchRecipeQuery query)
         {
-            return await Mediator.Send(query);
+            Debug.WriteLine(query);
+            var result = await Mediator.Send(query);
+            Debug.WriteLine(result);
+            return result;
         }
     }
 }

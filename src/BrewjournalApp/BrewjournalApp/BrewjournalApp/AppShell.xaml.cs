@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BrewjournalApp.Views;
 
 using Xamarin.Forms;
 
@@ -10,6 +9,7 @@ namespace BrewjournalApp
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute("recipedetails", typeof(RecipeDetailsPage));
         }
     }
 }
