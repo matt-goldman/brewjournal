@@ -22,6 +22,11 @@ namespace BrewjournalApp.Services
             return await client.GetAsync(id);
         }
 
+        public async Task<int> CreateAsync(RecipeDto recipe)
+        {
+            return await client.CreateAsync(recipe);
+        }
+
         public async Task<ICollection<RecipeDto>> SearchAsync(string searchterm)
         {
             ICollection<RecipeDto> recipes = new ObservableCollection<RecipeDto>();

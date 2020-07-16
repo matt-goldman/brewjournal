@@ -24,11 +24,15 @@ namespace BrewjournalApp.ViewModels
         public ICommand SearchRecipeCommand { get; set; }
         public ICommand OpenRecipeDetailsCommand { get; set; }
 
+        public ICommand AddNewRecipeCommand { get; set; }
+
         public RecipesViewModel()
         {
             client = new RecipesService();
             SearchRecipeCommand = new Command(async () => await SearchRecipes());
             OpenRecipeDetailsCommand = new Command(async () => await ShowRecipeDetails());
+            AddNewRecipeCommand = new Command(async () => await Navigation.PushAsync(new NewRecipePage()));
+            MessagingCenter.Subscribe<object, int>(this, "RecipeAdded", async (obj, id) => await Navigation.PushAsync(new RecipeDetailsPage(id)));
         }
 
         public async Task SearchRecipes()
