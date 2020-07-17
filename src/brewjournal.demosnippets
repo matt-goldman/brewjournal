@@ -1,17 +1,17 @@
 # Demo Snippets for Xamarin Hack Day 2020
 
-TAB: FodyWeavers.xml
+TAB: 1. FodyWeavers.xml
 
-- PropertyChanged config
+- Step 1 - PropertyChanged config
 
 <?xml version="1.0" encoding="utf-8"?>
 <Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
   <PropertyChanged />
 </Weavers> 
 
-TAB: Constants
+TAB: 2. Constants
 
-- Initialise
+- Step 1 - Initialise
 
 private string _apiUri;
 public string ApiUri
@@ -22,48 +22,31 @@ public string ApiUri
     }
 }
 
-- Constructor
+- Step 2 - Constructor
 
 public Constants()
 {
     _apiUri = ""// TODO: Paste ngrok url
 }
 
-TAB: App
+TAB: 3. App
 
-- Add Constants
+- Step 1 - Add Constants
 
 public static Constants Constants { get; set; }
 
-- Initialise
+- Step 2 - Initialise
 
 Constants = new Constants();
 
-- Reformat colours
+TAB: 6. Base Service
 
-<Color x:Key="NavigationPrimary">#ffb900</Color>
-<Color x:Key="BorderColour">#b38a19</Color>
-
-TAB: Main Page
-
-- Tabs to bottom
-
-xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-Title="BrewJournal"
-android:TabbedPage.ToolbarPlacement="Bottom"
-BarBackgroundColor="#ffb900"
-BarTextColor="White"
-android:TabbedPage.BarItemColor="#66FFFFFF"
-android:TabbedPage.BarSelectedItemColor="White"
-
-TAB: Base Service
-
-- Props
+- Step 1 - Props
 
 public static HttpClient httpClient { get; set; }
 public static string apiUri;
 
-- Constructor
+- Step 2 - Constructor
 
 public BaseService()
 {
@@ -71,25 +54,25 @@ public BaseService()
     apiUri = App.Constants.ApiUri;
 }
 
-TAB: Recipes Service
+TAB: 7. Recipes Service
 
-- Recipes Client
+- Step 1 - Recipes Service
 
-private readonly RecipesClient client;
+private readonly RecipesClient _service;
 
 public RecipesService()
 {
-    client = new RecipesClient(apiUri, httpClient);
+    _service = new RecipesClient(apiUri, httpClient);
 }
 
-- Get Method
+- Step 2 - Get Method
 
 public async Task<RecipeDto> GetAsync(int id)
 {
-    return await client.GetAsync(id);
+    return await _service.GetAsync(id);
 }
 
-- Search
+- Step 3 - Search
 
 public async Task<ICollection<RecipeDto>> SearchAsync(string searchterm)
 {
@@ -97,7 +80,7 @@ public async Task<ICollection<RecipeDto>> SearchAsync(string searchterm)
 
     SearchRecipeQuery query = new SearchRecipeQuery();
     query.Name = searchterm;
-    var vm = await client.SearchAsync(query);
+    var vm = await _service.SearchAsync(query);
 
     vm.Recipes.ForEach(r =>
     {
@@ -107,33 +90,33 @@ public async Task<ICollection<RecipeDto>> SearchAsync(string searchterm)
     return recipes;
 }
 
-- Create
+- Step 4 - Create
 
 public async Task<int> CreateAsync(RecipeDto recipe)
 {
     return await client.CreateAsync(recipe);
 }
 
-TAB: Base View Model
+TAB: 8. Base View Model
 
-- Add Navigation
+- Step 1 - Add Navigation
 
 public INavigation Navigation { get; set; }
 
-TAB: Recipes View Model
+TAB: 9. Recipes View Model
 
-- Recipes Service
+- Step 1 - Recipes Service
 
 private readonly RecipesService service;
 
-- Constructor  
+- Step 2 - Constructor  
 
 public RecipesViewModel()
 {
     Service = new RecipesService();
 }
 
-- Props
+- Step 3 - Props
 
 public string SearchTerm { get; set; }
 
@@ -144,7 +127,7 @@ public ICollection<RecipeDto> Recipes { get; set; } = new ObservableCollection<R
 public ICommand SearchRecipeCommand { get; set; }
 public ICommand OpenRecipeDetailsCommand { get; set; }
 
-- Methods
+- Step 4 - Methods
 
 public async Task SearchRecipes()
 {
@@ -152,58 +135,25 @@ public async Task SearchRecipes()
     Recipes = await client.SearchAsync(SearchTerm);
 }
 
-- Initialise
+- Step 5 - Initialise
 
 SearchRecipeCommand = new Command(async () => await SearchRecipes());
 
-TAB: Recipes Page
+TAB: 11. Recipes Page
 
-- Page Content
-
-<StackLayout>
-    <StackLayout Orientation="Horizontal"
-                    Padding="5">
-        <Entry Placeholder="Enter recipe search term..."
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="CenterAndExpand"
-            Text="{Binding SearchTerm}"/>
-        <Button Text="Search"
-            Command="{Binding SearchRecipeCommand}"/>
-    </StackLayout>
-    <CollectionView ItemsSource="{Binding Recipes}"
-                    Margin="5"
-                    SelectionMode="Single">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame HasShadow="True"
-                        Margin="10"
-                        Padding="10"
-                        BorderColor="{StaticResource BorderColour}">
-                    <StackLayout>
-                        <Label Text="{Binding Name}"
-                            FontAttributes="Bold"/>
-                        <Label Text="{Binding Style}"/>
-                    </StackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-
-</StackLayout>
-
-- Code behind
+- Step 1 - View Model
 
 public RecipesViewModel viewModel  {get; set; }
 
-- Constructor  
+- Step 2 - Constructor  
 
 viewModel = new RecipesViewModel();
 viewModel.Navigation = Navigation;
 BindingContext = viewModel;
 
-TAB: Recipe Details View Model
+TAB: 12. Recipe Details View Model
 
-- Props
+- Step 1 - Props
 
 private RecipeDto _recipe;
 
@@ -217,7 +167,7 @@ public string Notes { get; set; }
 
 private readonly RecipesService _service;
 
-- Initialise
+- Step 2 - Initialise
 
 private async Task Init(int id)
 {
@@ -231,7 +181,7 @@ private async Task Init(int id)
     _recipe.Ingredients.ForEach(i => Ingredients.Add(i));
 }
 
-- Constructor
+- Step 3 - Constructor
 
 public RecipeDetailsViewModel(int recipeId)
 {
@@ -239,63 +189,24 @@ public RecipeDetailsViewModel(int recipeId)
     _ = Init(recipeId);
 }
 
-TAB: RecipeDetailsPage
+TAB: 14. RecipeDetailsPage
 
-- Page Content
-<StackLayout VerticalOptions="StartAndExpand"
-                Padding="20">
-    <Label Text="{Binding Name}"
-            FontAttributes="Bold"
-            FontSize="Title"
-        VerticalOptions="Start" 
-        HorizontalOptions="CenterAndExpand" />
-    <StackLayout>
-        <Label Text="Style:"
-                FontAttributes="Bold"/>
-        <Label Text="{Binding Style}"/>
-    </StackLayout>
-    <StackLayout>
-        <Label FontAttributes="Bold"
-                Text="Notes:"/>
-        <Label Text="{Binding Notes}"/>
-    </StackLayout>
-    <Label Text="Ingredients:"
-            FontAttributes="Bold"/>
-    <CollectionView ItemsSource="{Binding Ingredients}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame HasShadow="True">
-                    <Grid ColumnDefinitions="3*, 2*">
-                        <Label Text="{Binding IngredientName}"
-                                    Grid.Column="0"/>
-                        <StackLayout Orientation="Horizontal"
-                                        Grid.Column="1">
-                            <Label Text="{Binding Quantity}"/>
-                            <Label Text="{Binding MassUnit}"/>
-                        </StackLayout>
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-</StackLayout>
-
-- Code behind: viewModel
+- Step 1 - ViewModel
 
 RecipeDetailsViewModel viewModel { get; set; }
 
-- Code behind: Constructor
+- Step 2 - Constructor
 
 viewModel = new RecipeDetailsViewModel(RecipeId);
 BindingContext = viewModel
 
-TAB: RecipesViewModel
+TAB: 15. RecipesViewModel
 
-- Command
+- Step 1 - Add open details Command
 
 public ICommand OpenRecipeDetailsCommand { get; set; }
 
-- Method
+- Step 2 - Add show details Method
 
 public async Task ShowRecipeDetails()
 {
@@ -313,27 +224,20 @@ public async Task ShowRecipeDetails()
     }
 }
 
-- Constructor
+- Step 3 - link in Constructor
 
 OpenRecipeDetailsCommand = new Command(async () => await ShowRecipeDetails());
 
-TAB: Recipes Page
+TAB: 17. New Recipes View Model
 
-- CollectionView
-
-SelectionChangedCommand="{Binding OpenRecipeDetailsCommand}"
-SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"
-
-TAB: New Recipes View Model
-
-- Props
+- Step 1 - Props
 
 public RecipeDto Recipe { get; set; } = new RecipeDto();
 public ICommand SaveCommand { get; set; }
 public ICommand CancelCommand { get; set; }
 private RecipesService service { get; set; }
 
-- Method
+- Step 2 - Method
 
 public async Task SaveRecipe()
 {
@@ -341,7 +245,7 @@ public async Task SaveRecipe()
     MessagingCenter.Send<object, int>(this, "RecipeAdded", id);
 }
 
-- Constructor
+- Step 3 - Constructor
 
 public NewRecipeViewModel()
 {
@@ -350,55 +254,25 @@ public NewRecipeViewModel()
     CancelCommand = new Command(async () => await Navigation.PopAsync());
 }
 
-TAB: New Recipe Page
+TAB: 19. New Recipe Page
 
-- Page Content
-
- <StackLayout Spacing="20" Padding="15">
-    <Label Text="Name" FontSize="Medium" />
-    <Entry Text="{Binding Recipe.Name}" d:Text="Recipe name" FontSize="Small" />
-    <Label Text="Style" FontSize="Medium" />
-    <Editor Text="{Binding Recipe.Style}" d:Text="Recipe style" FontSize="Small" Margin="0" />
-    <Label Text="Notes" FontSize="Medium" />
-    <Editor Text="{Binding Recipe.Notes}" d:Text="Recipe notes" FontSize="Small" Margin="0" />
-    <StackLayout Orientation="Horizontal"
-                    HorizontalOptions="FillAndExpand">
-        <Label Text="Ingredients"
-                FontSize="Medium"
-                HorizontalOptions="StartAndExpand"
-                VerticalOptions="Center"/>
-        <Button Text="Add"
-                HorizontalOptions="EndAndExpand"
-                VerticalOptions="Center"
-                Command="{Binding AddIngredientCommand}"/>
-    </StackLayout>
-</StackLayout>
-
-- Code Behind: viewModel
+- Step 1 - ViewModel
 
 public NewRecipeViewModel viewModel { get; set; }
 
-- Code Behind: Constructor
+- Step 2 - Constructor
 
 viewModel = new NewRecipeViewModel();
 viewModel.Navigation = Navigation;
 BindingContext = viewModel;
 
-TAB: RecipesViewModel
+TAB: 20. RecipesViewModel
 
-- Command
+- Step 1- Command
 
 public ICommand AddNewRecipeCommand { get; set; }
 
-- Constructor
+- Step 2 - Constructor
 
 AddNewRecipeCommand = new Command(async () => await Navigation.PushAsync(new NewRecipePage()));
 MessagingCenter.Subscribe<object, int>(this, "RecipeAdded", async (obj, id) => await Navigation.PushAsync(new RecipeDetailsPage(id)));
-
-TAB: Recipes Page
-
-- Add button
-
-<Button Text="Add new recipe"
-        Margin="30,0,30,0"
-        Command="{Binding AddNewRecipeCommand}"/>
