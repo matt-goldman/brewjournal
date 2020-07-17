@@ -1,4 +1,4 @@
-<img align="left" width="116" height="116" src="https://github.com/matt-goldman/brewjournal/blob/master/assets/Beer.svg" />
+<img align="left" width="116" height="116" src="https://raw.githubusercontent.com/matt-goldman/brewjournal/main/assets/Beer.svg" />
 
 # Brew Journal
 
