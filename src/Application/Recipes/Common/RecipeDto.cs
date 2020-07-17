@@ -7,6 +7,7 @@ namespace brewjournal.Application.Recipes.Common
 {
     public class RecipeDto : IMapFrom<Recipe>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Style { get; set; }
         public List<RecipeIngredientDto> Ingredients { get; set; }

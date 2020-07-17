@@ -1017,6 +1017,7 @@ export interface IIngredientsVm {
 }
 
 export class RecipeDto implements IRecipeDto {
+    id?: number;
     name?: string | undefined;
     style?: string | undefined;
     ingredients?: RecipeIngredientDto[] | undefined;
@@ -1036,6 +1037,7 @@ export class RecipeDto implements IRecipeDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.style = _data["style"];
             if (Array.isArray(_data["ingredients"])) {
@@ -1059,6 +1061,7 @@ export class RecipeDto implements IRecipeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["style"] = this.style;
         if (Array.isArray(this.ingredients)) {
@@ -1075,6 +1078,7 @@ export class RecipeDto implements IRecipeDto {
 }
 
 export interface IRecipeDto {
+    id?: number;
     name?: string | undefined;
     style?: string | undefined;
     ingredients?: RecipeIngredientDto[] | undefined;

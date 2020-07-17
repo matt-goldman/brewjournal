@@ -117,7 +117,7 @@
       "newLineBehavior": "Auto"
     },
     "openApiToCSharpClient": {
-      "clientBaseClass": "BaseClient",
+      "clientBaseClass": null,
       "configurationClass": null,
       "generateClientClasses": true,
       "generateClientInterfaces": false,
@@ -161,7 +161,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "BrewjournalApp",
+      "namespace": "BrewjournalApp.Services",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,
