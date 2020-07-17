@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- DEMOSNIPPETS-TAB 4. App.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Format colours -->
+<Color x:Key="NavigationPrimary">#ffb900</Color>
+<Color x:Key="BorderColour">#b38a19</Color>
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 5. Mainpage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Android bottom tabs -->
+xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+Title="BrewJournal"
+android:TabbedPage.ToolbarPlacement="Bottom"
+BarBackgroundColor="#ffb900"
+BarTextColor="White"
+android:TabbedPage.BarItemColor="#66FFFFFF"
+android:TabbedPage.BarSelectedItemColor="White"
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 10. RecipesPage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Labels and headers -->
+<StackLayout>
+    <StackLayout Orientation="Horizontal"
+                    Padding="5">
+        <Entry Placeholder="Enter recipe search term..."
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding SearchTerm}"/>
+        <Button Text="Search"
+            Command="{Binding SearchRecipeCommand}"/>
+    </StackLayout>
+
+</StackLayout>
+<!-- DEMOSNIPPETS-LABEL Step 2 - Search results collection-->
+    <CollectionView ItemsSource="{Binding Recipes}"
+                    Margin="5"
+                    SelectionMode="Single">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame HasShadow="True"
+                        Margin="10"
+                        Padding="10"
+                        BorderColor="{StaticResource BorderColour}">
+                    <StackLayout>
+                        <Label Text="{Binding Name}"
+                            FontAttributes="Bold"/>
+                        <Label Text="{Binding Style}"/>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 13. RecipesDetailsPage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Labels and headers -->
+<StackLayout VerticalOptions="StartAndExpand"
+                Padding="20">
+    <Label Text="{Binding Name}"
+            FontAttributes="Bold"
+            FontSize="Title"
+        VerticalOptions="Start" 
+        HorizontalOptions="CenterAndExpand" />
+    <StackLayout>
+        <Label Text="Style:"
+                FontAttributes="Bold"/>
+        <Label Text="{Binding Style}"/>
+    </StackLayout>
+    <StackLayout>
+        <Label FontAttributes="Bold"
+                Text="Notes:"/>
+        <Label Text="{Binding Notes}"/>
+    </StackLayout>
+    <Label Text="Ingredients:"
+            FontAttributes="Bold"/>
+</StackLayout>
+<!-- DEMOSNIPPETS-LABEL Step 2 - Ingredients collection-->
+    <CollectionView ItemsSource="{Binding Ingredients}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame HasShadow="True">
+                    <Grid ColumnDefinitions="3*, 2*">
+                        <Label Text="{Binding IngredientName}"
+                                    Grid.Column="0"/>
+                        <StackLayout Orientation="Horizontal"
+                                        Grid.Column="1">
+                            <Label Text="{Binding Quantity}"/>
+                            <Label Text="{Binding MassUnit}"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 16. RecipesPage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Add to collectionview -->
+SelectionChangedCommand="{Binding OpenRecipeDetailsCommand}"
+SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 18. NewRecipePage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Add form -->
+ <StackLayout Spacing="20" Padding="15">
+    <Label Text="Name" FontSize="Medium" />
+    <Entry Text="{Binding Recipe.Name}" d:Text="Recipe name" FontSize="Small" />
+    <Label Text="Style" FontSize="Medium" />
+    <Editor Text="{Binding Recipe.Style}" d:Text="Recipe style" FontSize="Small" Margin="0" />
+    <Label Text="Notes" FontSize="Medium" />
+    <Editor Text="{Binding Recipe.Notes}" d:Text="Recipe notes" FontSize="Small" Margin="0" />
+    <StackLayout Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand">
+        <Label Text="Ingredients"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                VerticalOptions="Center"/>
+        <Button Text="Add"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                Command="{Binding AddIngredientCommand}"/>
+    </StackLayout>
+</StackLayout>
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
+
+<!-- DEMOSNIPPETS-TAB 21. RecipesPage.xaml -->
+<!-- DEMOSNIPPETS-LABEL Step 1 - Add button -->
+<Button Text="Add new recipe"
+        Margin="30,0,30,0"
+        Command="{Binding AddNewRecipeCommand}"/>
+<!-- DEMOSNIPPETS-ENDSNIPPET -->
