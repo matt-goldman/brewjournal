@@ -20,13 +20,13 @@ namespace BrewjournalApp.ViewModels
         {
             service = new RecipesService();
             SaveCommand = new Command(async () => await SaveRecipe());
+            CancelCommand = new Command(async () => await Navigation.PopAsync());
         }
 
         public async Task SaveRecipe()
         {
             int id = await service.CreateAsync(Recipe);
             MessagingCenter.Send<object, int>(this, "RecipeAdded", id);
-            await Navigation.PopAsync();
         }
     }
 }

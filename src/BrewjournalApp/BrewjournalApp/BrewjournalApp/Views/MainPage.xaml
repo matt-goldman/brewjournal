@@ -5,6 +5,13 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             mc:Ignorable="d"
             xmlns:views="clr-namespace:BrewjournalApp.Views"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            Title="BrewJournal"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            BarBackgroundColor="#ffb900"
+            BarTextColor="White"
+            android:TabbedPage.BarItemColor="#66FFFFFF"
+            android:TabbedPage.BarSelectedItemColor="White"
             x:Class="BrewjournalApp.Views.MainPage">
 
     <TabbedPage.Children>

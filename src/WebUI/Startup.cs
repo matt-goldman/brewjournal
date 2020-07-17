@@ -87,7 +87,7 @@ namespace brewjournal.WebUI
             }
 
             app.UseHealthChecks("/health");
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {

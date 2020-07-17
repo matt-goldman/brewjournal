@@ -13,7 +13,7 @@
 
         public Constants()
         {
-            _apiUri = "https://4c3f8f3dea4d.ngrok.io";
+            _apiUri = "https://203190060798.ngrok.io";
         }
     }
 }
