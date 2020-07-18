@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace BrewjournalApp
 {
-    public static class Constants
+    public class Constants
     {
-        private static string _apiUri;
-        public static string ApiUri
+        private string _apiUri;
+
+        public string ApiUri
         {
             get
             {
-                return "https://3a9b26f298f4.ngrok.io";
+                return _apiUri;
             }
+        }
+
+        public Constants()
+        {
+            _apiUri = ""; //TODO: copy your API uri here
         }
     }
 }

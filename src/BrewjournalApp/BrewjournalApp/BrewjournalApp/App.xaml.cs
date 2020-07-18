@@ -8,6 +8,8 @@ namespace BrewjournalApp
 {
     public partial class App : Application
     {
+        public static Constants Constants = new Constants();
+
         public App()
         {
             InitializeComponent();

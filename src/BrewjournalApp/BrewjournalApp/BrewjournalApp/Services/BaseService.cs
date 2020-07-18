@@ -13,7 +13,7 @@ namespace BrewjournalApp.Services
         public BaseService()
         {
             httpClient = new HttpClient();
-            apiUri = Constants.ApiUri;
+            apiUri = App.Constants.ApiUri;
         }
     }
 }
