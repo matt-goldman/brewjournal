@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BrewjournalApp.Views.RecipesPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal"
+                    Padding="5">
+                <Entry Placeholder="Enter recipe search term..."
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding SearchTerm}"/>
+                <Button Text="Search"
+            Command="{Binding SearchRecipeCommand}"/>
+            </StackLayout>
+            <Button Text="Add new recipe"
+        Margin="30,0,30,0"
+        Command="{Binding AddNewRecipeCommand}"/>
+            <CollectionView ItemsSource="{Binding Recipes}"
+                    Margin="5"
+                            SelectionChangedCommand="{Binding OpenRecipeDetailsCommand}"
+                            SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"
+                    SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HasShadow="True"
+                        Margin="10"
+                        Padding="10"
+                        BorderColor="{StaticResource BorderColour}">
+                            <StackLayout>
+                                <Label Text="{Binding Name}"
+                            FontAttributes="Bold"/>
+                                <Label Text="{Binding Style}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
